@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CV Ruth Marick - Version Interactive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    
+    body {
+      background-color:#f0f2f5;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start; 
+      min-height:100vh;
+      padding: 40px 20px;
+    }
+
+    .livre-wrapper {
+      position: relative;
+      width: 800px;
+      min-height: 880px; 
+      perspective: 2000px;
+    }
+
+    .couverture-livre {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2b303c 0%, #1a1c23 100%);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      border-radius: 0 12px 12px 0;
+      box-shadow: 15px 15px 40px rgba(0,0,0,0.4);
+      z-index: 3;
+      
+      transform-origin: left center;
+      transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      backface-visibility: hidden;
+    }
+
+    .couverture-livre::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .couverture-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .couverture-content h2 {
+      font-size: 1.4rem;
+      color: #7b828e;
+      font-weight: 300;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .badge-filiere {
+      background-color: #4c566a;
+      color: #e5e9f0;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 50px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    #showCVBtn {
+      display: block;
+      margin: 0 auto;
+      padding: 16px 35px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background-color: #eaeaea;
+      color: #111111;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    #showCVBtn:hover { 
+      transform: translateY(-3px) scale(1.03); 
+      background-color: #ffffff;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    }
+
+    .cv-container {
+      width: 100%;
+      background-color: #eaeaea;
+      display: flex;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative; 
+      
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .livre-wrapper.ouvert .couverture-livre {
+      transform: rotateY(-155deg);
+      opacity: 0; 
+      pointer-events: none;
+    }
+
+    .livre-wrapper.ouvert .cv-container {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .close-cv-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #3b4252;
+      color: #ffffff;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .close-cv-btn:hover {
+      background-color: #bf616a; 
+      transform: scale(1.1);
+    }
+
+    .left-column {
+      width: 40%;
+      background: linear-gradient(180deg,#333333 0%,#111111 100%);
+      color: #ffffff;
+      padding: 40px 0 30px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .profile-frame {
+      width: 220px; height: 310px; background:#222;
+      border-radius: 120px 120px 20px 120px;
+      padding: 12px; display:flex; justify-content:center; align-items:flex-start;
+      margin-bottom: 30px; box-shadow:inset 0 0 20px rgba(0,0,0,0.5);
+    }
+    .profile-img { width:100%; height:100%; object-fit:cover; border-radius:105px 105px 15px 105px; }
+    
+    .left-section-title {
+      width: 105%; background-color:#1a1a1a; padding:12px 20px; margin-bottom:20px;
+      font-size: 1.15rem; font-weight:700; text-align:left; padding-left:35px;
+      border-radius: 4px 0 0 4px; box-shadow:-3px 3px 5px rgba(0,0,0,0.3);
+    }
+    .left-content { padding:0 25px; width:100%; margin-bottom:35px; }
+    .left-content p { font-size:0.85rem; line-height:1.6; color:#ccc; text-align:justify; }
+    .skills-list { list-style:none; }
+    .skills-list li { font-size:0.9rem; margin-bottom:8px; color:#ddd; position:relative; padding-left:15px; }
+    .skills-list li::before { content:"•"; color:#fff; font-weight:bold; position:absolute; left:0; }
+    
+    .contact-info { display:flex; flex-direction:column; gap:15px; word-break: break-all; } /* Empêche les liens longs de dépasser */
+    .contact-item { display:flex; align-items:center; gap:12px; font-size:0.8rem; color:#ddd; }
+    .contact-item i { background-color:#fff; color:#111; width:28px; height:28px; border-radius:50%; flex-shrink: 0; display:flex; justify-content:center; align-items:center; font-size:0.85rem; }
+    .contact-item span { line-height: 1.3; }
+
+    .right-column { width:60%; background-color:#eaeaea; padding:50px 40px; }
+    .header-name { margin-bottom: 40px; padding-right: 40px; } /* padding-right évite de chevaucher le bouton fermer */
+    .header-name h1 { font-size:2.4rem; color:#3b4252; line-height:1.1; font-weight:700; text-transform: uppercase; }
+    .header-name h2 { font-size:1.4rem; color:#7b828e; font-weight:300; font-style:italic; margin-top:5px; }
+    
+    .right-section-title { background-color:#1a1a1a; color:#fff; font-size:1.25rem; font-weight:700; padding:8px 25px; margin-bottom:20px; display:inline-block; width:100%; }
+    .timeline-container { position:relative; padding-left:30px; margin-bottom:35px; }
+    .timeline-container::before { content:''; position:absolute; left:5px; top:10px; bottom:10px; width:1px; background-color:#999; }
+    .timeline-item { position:relative; margin-bottom:20px; }
+    .timeline-item::before { content:''; position:absolute; left:-30px; top:6px; width:11px; height:11px; background-color:#4c566a; border-radius:50%; }
+    
+    .time-period { font-size:0.85rem; color:#7b828e; font-weight:600; }
+    .institution,.job-title { font-size:1rem; color:#3b4252; font-weight:600; margin-top:2px; }
+    .location,.company { font-size:0.9rem; color:#666; }
+    
+    .task-list { margin-top:6px; list-style:none; padding-left:15px; }
+    .task-list li { font-size:0.85rem; color:#555; position:relative; margin-bottom:4px; line-height:1.4; }
+    .task-list li::before { content:"•"; position:absolute; left:-15px; color:#333; }
+  </style>
+</head>
+<body>
+
+  <div class="livre-wrapper" id="livre">
+    
+    <div class="couverture-livre">
+      <div class="couverture-content">
+        <h1>Ruth Marick Willyana Ines<br>NTSAME NDONG</h1>
+        <h2>Marketing Digital</h2>
+        <div style="text-align: center;">
+          <span class="badge-filiere">Management des TIC & Audiovisuel</span>
+        </div>
+        <button id="showCVBtn" onclick="ouvrirCV()">Ouvrir le CV</button>
+      </div>
+    </div>
+
+    <div class="cv-container">
+      
+      <button class="close-cv-btn" onclick="fermerCV()" title="Fermer le livre">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="left-column">
+        <div class="profile-frame">
+          <img src="photo.jpg" alt="Ruth Marick" class="profile-img">
+        </div>
+        
+        <div class="left-section-title">A Propos de Moi</div>
+        <div class="left-content">
+          <p>Étudiante en Management des Technologies de l’Information et de la Communication, passionnée par le digital et la création audiovisuelle...</p>
+        </div>
+        
+        <div class="left-section-title">Compétences</div>
+        <div class="left-content">
+          <ul class="skills-list">
+            <li>Infographie</li>
+            <li>Programmation web</li>
+            <li>Contenu marketing</li>
+            <li>Marketing digital</li>
+            <li>Création de vidéo</li>
+          </ul>
+        </div>
+        
+        <div class="left-section-title">Contactez-moi</div>
+        <div class="left-content">
+          <div class="contact-info">
+            <div class="contact-item"><i class="fa-solid fa-phone"></i><span>+241 74 95 53 61</span></div>
+            <div class="contact-item"><i class="fa-solid fa-envelope"></i><span>r0245536@gmail.com</span></div>
+            <div class="contact-item"><i class="fa-solid fa-globe"></i><span>www.linkedin.com/in/ruth-marick-ntsame-ndong-4a5614336</span></div>
+            <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>Rue Maurice le Flem, Libreville/Gabon</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="header-name">
+          <h1>Ruth Marick Willyana Ines<br>NTSAME NDONG</h1>
+          <h2>Marketing Digital</h2>
+        </div>
+        
+        <div class="right-section-title">Education</div>
+        <div class="timeline-container">
+          <div class="timeline-item">
+            <div class="time-period">2024-2025</div>
+            <div class="institution">Baccalauréat</div>
+            <div class="location">Lycée Georges MABIGNATH</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time-period">2025-2026</div>
+            <div class="institution">DTS en cours</div>
+            <div class="location">Institut National de la Poste, des TIC</div>
+          </div>
+        </div>
+        
+        <div class="right-section-title">Expériences</div>
+        <div class="timeline-container">
+          <div class="timeline-item">
+            <div class="job-title">Agent Commercial</div>
+            <div class="company">OMNIUM GABON - 2025</div>
+            <ul class="task-list">
+              <li>Rédaction des rapports de pose</li>
+              <li>Transactions bancaires</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <div class="job-title">Community Manager</div>
+            <div class="company">OMNIUM GABON - 2025</div>
+            <ul class="task-list">
+              <li>Création de contenu digital</li>
+              <li>Animation des pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div> 
+  </div> 
+
+  <script>
+    const livre = document.getElementById('livre');
+
+    function ouvrirCV() {
+      livre.classList.add('ouvert');
+    }
+
+    function fermerCV() {
+      livre.classList.remove('ouvert');
+    }
+  </script>
+</body>
+</html>
